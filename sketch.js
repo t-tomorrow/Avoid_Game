@@ -65,16 +65,16 @@ function preload(){
   sound5 = loadSound('assets/sound5.mp3');        //1up獲得音
   sound6 = loadSound('assets/sound6.mp3');        //ゲームクリア
   sound7 = loadSound('assets/sound7.mp3');        //風切り音
-  
+
   //car2 = loadModel('assets/Car.obj');
 }
 
 function setup() {
   //短辺を基準にテキスト、画像を描画
   //s_len：短辺になる方の元のキャンバスサイズ
-  //createCanvas(764, 523); 
-  createCanvas(windowWidth, windowHeight); 
-  
+  //createCanvas(764, 523);
+  createCanvas(windowWidth, windowHeight);
+
   if(width > height){
     s_side = height;
     s_len = 523;
@@ -82,12 +82,12 @@ function setup() {
     s_side = width;
     s_len = 764;
   }
-  
+
   size_rate = (height * width) / (764 * 523);
   x_axis_rate = width / 764;
   y_axis_rate = height / 523;
-  
-  
+
+
   //print(height, width);
   //print(s_side/s_len);
   //print(size_rate);
@@ -103,10 +103,10 @@ function setup() {
 }
 
 
-function draw() {  
+function draw() {
   imageMode(CORNER);
   background(bg_img);
-  
+
   /*
   step -> 1:初期画面　2:説明　3:ゲーム本体　4.結果
   */
@@ -114,11 +114,11 @@ function draw() {
     case 1:
       init_display();
       break;
-    
+
     case 2:
       explanation_display1();
       break;
-    
+
     case 2.1:
       if(once == 1 && (mode == 2 || mode == 3)){
         Camera_mode();
@@ -126,51 +126,51 @@ function draw() {
       }
       explanation_display2();
       break;
-    
+
     case 3:
       //バナナや車を表示
       imageMode(CENTER);
       func_tree();
       func_line();
       func_banana();
-      
+
       car.display();
       score_display();
-      
+
       //車のハンドル操作
       if(mode == 2 || mode == 3){
         imageMode(CORNER);
         Camera();
         Handle();
       }
-      
+
       //ジャイロセンサーでハンドル操作
       //gyro_sensor();
-      
+
       //キーボードでの操作
       if(keyIsPressed && (key == 'a' || key == 'd')){
-          car.button_move(key);  
+          car.button_move(key);
       }
-      
+
       if(life <= 0) {
         sound6.play();
         //print(life ,kinoko_point, banana_hit_num ,init_life);
         deleteObj();
         step = 4;
       }
-      
+
       break;
-    
+
     case 4:
       end_display();
       break;
   }
-  
+
   //タッチセンサーでの操作
   //if(isSmartphone){
     touch_screen();
   //}
-  
+
   //model(car2);
 }
 
@@ -181,24 +181,24 @@ function keyTyped(){
       if(key == 1) mode = 1;
       if(key == 2) mode = 2;
       if(key == 3) mode = 3;
-      
+
       sound3.play();
       step = 2.1;
     }
   }
-  
+
   if(key === 'Enter'){
     if(step != 2 && step != 3 && step != 4){
       sound3.play();
     }
-    
+
     if(step == 1){
       deleteObj();
       step ++;
     }
     else if(step == 2.1){
       sound1.play();
-      step = Math.floor(++step);       
+      step = Math.floor(++step);
     }
   }
 }
@@ -206,10 +206,10 @@ function keyTyped(){
 function keyPressed(){
   if(keyCode == ESCAPE) {
     sound3.play();
-    
+
     //escapeキーで再びゲームする人用
     replay_conf();
-    step = 1; 
+    step = 1;
   }
 }
 
@@ -218,4 +218,5 @@ function isSmartPhone() {
     if (navigator.userAgent.match(/iPhone|Android.+Mobile/)){
       return true;
     }
+
 }
